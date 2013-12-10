@@ -2,14 +2,11 @@ package dockerapi
 
 import (
 	"fmt"
-	"encoding/json"
 )
-
 
 const (
 	RESOURCE_PATH_INSPECT = "/containers/%s/json"
 )
-
 
 func NewClient(socketPath string) *Client {
 
@@ -32,12 +29,9 @@ func (c *Client) Inspect(containerId string) (Container, error) {
 		return entity, err
 	}
 
-	if err = json.Unmarshal(bytes, &entity); err != nil {
+	if err = ContainerFromJson(bytes, &entity); err != nil {
 		return entity, err
 	}
 
 	return entity, nil
 }
-
-
-
