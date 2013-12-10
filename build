@@ -3,8 +3,4 @@ set -e
 
 PACKAGE=github.com/benschw/go-dockerclient/dockerapi
 
-#export GOPATH="${PWD}"
-
-
-./scripts/release-version > server/release_version.go
-go build "${ETCD_PACKAGE}"
+go build "${PACKAGE}"
