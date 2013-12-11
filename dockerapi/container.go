@@ -99,7 +99,7 @@ type CreateContainerResponse struct {
 }
 
 // CreateContainer will create a container
-func (c *Client) CreateContainer(data interface{}) (CreateContainerResponse, error) {
+func (c *Client) CreateContainer(data CreateContainerRequest) (CreateContainerResponse, error) {
 	var err error
 	var entity CreateContainerResponse
 
