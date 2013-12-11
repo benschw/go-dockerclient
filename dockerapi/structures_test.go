@@ -7,7 +7,7 @@ func TestInspect(t *testing.T) {
 
 	var entity Container
 
-	if err := ContainerFromJson(bytes, &entity); err != nil {
+	if err := containerFromJson(bytes, &entity); err != nil {
 		t.Errorf("Problem mapping json to Container structure")
 	}
 

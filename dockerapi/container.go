@@ -22,7 +22,7 @@ type Container struct {
 	Volumes         map[string]string
 }
 
-func ContainerFromJson(bytes []byte, entity *Container) error {
+func containerFromJson(bytes []byte, entity *Container) error {
 	if err := json.Unmarshal(bytes, &entity); err != nil {
 		return err
 	}
@@ -54,7 +54,7 @@ func (c *Client) Inspect(id string) (Container, error) {
 		return entity, err
 	}
 
-	if err = ContainerFromJson(bytes, &entity); err != nil {
+	if err = containerFromJson(bytes, &entity); err != nil {
 		return entity, err
 	}
 
