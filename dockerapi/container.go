@@ -99,11 +99,11 @@ type CreateContainerResponse struct {
 }
 
 // CreateContainer will create a container
-func (c *Client) CreateContainer(data CreateContainerRequest) (CreateContainerResponse, error) {
+func (c *Client) CreateContainer(req CreateContainerRequest) (CreateContainerResponse, error) {
 	var err error
 	var entity CreateContainerResponse
 
-	bytes, status, err := c.post(RESOURCE_PATH_CREATE_CONTAINER, data)
+	bytes, status, err := c.post(RESOURCE_PATH_CREATE_CONTAINER, req)
 	if status == http.StatusNotFound {
 		return entity, errors.New("Image not found")
 	}
@@ -129,10 +129,10 @@ type StartContainerRequest struct {
 }
 
 // StartContainer will start up a previously created container
-func (c *Client) StartContainer(id string, data StartContainerRequest) error {
+func (c *Client) StartContainer(id string, req StartContainerRequest) error {
 	var err error
 
-	bytes, status, err := c.post(fmt.Sprintf(RESOURCE_PATH_START_CONTAINER, id), data)
+	bytes, status, err := c.post(fmt.Sprintf(RESOURCE_PATH_START_CONTAINER, id), req)
 	if status == http.StatusNotFound {
 		return errors.New("Container not found")
 	}
