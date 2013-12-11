@@ -3,7 +3,6 @@ package dockerapi
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"io"
 	"io/ioutil"
 	"log"
@@ -29,43 +28,15 @@ type Client struct {
 	socketPath string
 }
 
-func apiGet(socketPath string, path string) ([]byte, error) {
-	req, err := http.NewRequest("GET", path, nil)
-	if err != nil {
-		return nil, err
-	}
-	dial, err := net.Dial("unix", socketPath)
-	if err != nil {
-		return nil, err
-	}
-
-	var resp *http.Response
-	clientconn := httputil.NewClientConn(dial, nil)
-	resp, err = clientconn.Do(req)
-	defer clientconn.Close()
-
-	if resp.StatusCode < 200 || resp.StatusCode >= 400 {
-		return nil, errors.New("bad status code")
-	}
-
-	if resp.Header.Get("Content-Type") != "application/json" {
-		return nil, errors.New("expected application/json")
-	}
-
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return body, nil
+func (c *Client) get(path string) ([]byte, int, error) {
+	return c.apiCall("GET", path, nil)
 }
 
-func apiPost(socketPath string, path string, data interface{}) ([]byte, int, error) {
-	return apiCall(socketPath, "POST", path, data)
+func (c *Client) post(path string, data interface{}) ([]byte, int, error) {
+	return c.apiCall("POST", path, data)
 }
 
-func apiCall(socketPath string, method string, path string, data interface{}) ([]byte, int, error) {
+func (c *Client) apiCall(method string, path string, data interface{}) ([]byte, int, error) {
 	status := 0
 
 	// setup request
@@ -93,7 +64,7 @@ func apiCall(socketPath string, method string, path string, data interface{}) ([
 	}
 
 	// setup connection
-	dial, err := net.Dial("unix", socketPath)
+	dial, err := net.Dial("unix", c.socketPath)
 	if err != nil {
 		return nil, status, err
 	}

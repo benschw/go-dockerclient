@@ -9,14 +9,8 @@ import (
 	"strconv"
 )
 
-func ContainerFromJson(bytes []byte, entity *Container) error {
-	if err := json.Unmarshal(bytes, &entity); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Inspect Container
+/* Inspect Container
+ */
 type Container struct {
 	ID              string
 	Created         string
@@ -26,6 +20,13 @@ type Container struct {
 	Image           string
 	NetworkSettings NetworkSettings
 	Volumes         map[string]string
+}
+
+func ContainerFromJson(bytes []byte, entity *Container) error {
+	if err := json.Unmarshal(bytes, &entity); err != nil {
+		return err
+	}
+	return nil
 }
 
 type NetworkSettings struct {
@@ -45,7 +46,10 @@ func (c *Client) Inspect(id string) (Container, error) {
 
 	var entity Container
 
-	bytes, err := apiGet(c.socketPath, fmt.Sprintf(RESOURCE_PATH_INSPECT, id))
+	bytes, status, err := c.get(fmt.Sprintf(RESOURCE_PATH_INSPECT, id))
+	if status == http.StatusNotFound {
+		return entity, errors.New("Container not found")
+	}
 	if err != nil {
 		return entity, err
 	}
@@ -57,7 +61,8 @@ func (c *Client) Inspect(id string) (Container, error) {
 	return entity, nil
 }
 
-/* Create Container */
+/* Create Container
+ */
 
 type CreateContainerRequest struct {
 	Image string
@@ -98,7 +103,7 @@ func (c *Client) CreateContainer(data interface{}) (CreateContainerResponse, err
 	var err error
 	var entity CreateContainerResponse
 
-	bytes, status, err := apiPost(c.socketPath, RESOURCE_PATH_CREATE_CONTAINER, data)
+	bytes, status, err := c.post(RESOURCE_PATH_CREATE_CONTAINER, data)
 	if status == http.StatusNotFound {
 		return entity, errors.New("Image not found")
 	}
@@ -113,6 +118,9 @@ func (c *Client) CreateContainer(data interface{}) (CreateContainerResponse, err
 	return entity, nil
 }
 
+/* Start Container
+ */
+
 type ContainerHostPort struct {
 	HostPort string
 }
@@ -124,7 +132,7 @@ type StartContainerRequest struct {
 func (c *Client) StartContainer(id string, data StartContainerRequest) error {
 	var err error
 
-	bytes, status, err := apiPost(c.socketPath, fmt.Sprintf(RESOURCE_PATH_START_CONTAINER, id), data)
+	bytes, status, err := c.post(fmt.Sprintf(RESOURCE_PATH_START_CONTAINER, id), data)
 	if status == http.StatusNotFound {
 		return errors.New("Container not found")
 	}
