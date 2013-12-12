@@ -9,6 +9,8 @@ import (
 	"strconv"
 )
 
+var _ = log.Print // For debugging; delete when done.
+
 /* Inspect Container
  */
 type Container struct {
@@ -111,7 +113,6 @@ func (c *Client) CreateContainer(req CreateContainerRequest) (CreateContainerRes
 		return entity, err
 	}
 	if err = CreateContainerResponseFromJson(bytes, &entity); err != nil {
-		log.Print(entity)
 		return entity, err
 	}
 

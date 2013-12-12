@@ -2,9 +2,17 @@
 set -e
 
 
-. ./build
+sudo ./clean.sh
+. ./build.sh
 
+echo 
+echo Unit Tests:
+echo 
+. ./test_unit.sh
 
-go test -i ./dockerapi
-go test -v ./dockerapi
+echo 
+echo Integration Tests:
+echo
+sudo ./test_integration.sh
+
 

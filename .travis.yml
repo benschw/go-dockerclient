@@ -1,5 +1,12 @@
 language: go
 go: 1.1
 
+install:
+ - echo deb http://archive.ubuntu.com/ubuntu precise universe > /etc/apt/sources.list.d/universe.list
+ - apt-get update -qq
+ - apt-get install -qqy iptables ca-certificates lxc
+ - wget -O /usr/local/bin/docker https://get.docker.io/builds/Linux/x86_64/docker-latest 
+ - docker -d &
+
 script:
- - ./test.sh
+ - ./test_unit.sh

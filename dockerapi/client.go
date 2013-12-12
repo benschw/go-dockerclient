@@ -11,6 +11,8 @@ import (
 	"net/http/httputil"
 )
 
+var _ = log.Print // For debugging; delete when done.
+
 const (
 	RESOURCE_PATH_INSPECT          = "/containers/%s/json"
 	RESOURCE_PATH_CREATE_CONTAINER = "/containers/create"
@@ -48,7 +50,7 @@ func (c *Client) apiCall(method string, path string, data interface{}) ([]byte, 
 			return nil, status, err
 		}
 		params = bytes.NewBuffer(buf)
-		log.Print(string(buf[:]))
+		// log.Print(string(buf[:]))
 
 	}
 

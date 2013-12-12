@@ -1,6 +1,8 @@
 package dockerapi
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestInspect(t *testing.T) {
 	bytes := []byte(expected)
