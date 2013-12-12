@@ -11,7 +11,6 @@ import (
 func main() {
 	var (
 		socketPath string
-		//		containerId string
 	)
 
 	flag.StringVar(&socketPath, "s", "/var/run/docker.sock", "unix socket to connect to")
