@@ -10,14 +10,12 @@ export GOPATH="${PWD}/build"
 
 sleep 2
 
+docker pull benschw/etcd
 
 
 echo building...
 . ./clean.sh
 . ./build.sh
-
-
-docker pull benschw/etcd
 
 
 echo 
