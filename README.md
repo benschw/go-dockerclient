@@ -3,6 +3,3 @@
 
 ## go-dockerclient/dockerapi
 
-docker build -t dind ./dockerapi/integration_tests/
-
-sudo docker run -privileged -t -i -v `pwd`:/opt dind

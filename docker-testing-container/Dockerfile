@@ -16,7 +16,6 @@ ADD ./docker-latest /usr/local/bin/docker
 RUN chmod +x /usr/local/bin/docker 
 
 
-
 VOLUME /var/lib/docker
 
-CMD /opt/dockerapi/integration_tests/inttest_in_docker.sh
+CMD /opt/docker-testing-container/inttest_in_docker.sh

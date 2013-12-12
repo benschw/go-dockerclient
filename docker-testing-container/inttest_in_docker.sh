@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-. /opt/dockerapi/integration_tests/wrapdocker 
+. /opt/docker-testing-container/wrapdocker 
 
 cd /opt
 
