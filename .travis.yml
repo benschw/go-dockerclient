@@ -1,12 +1,5 @@
 language: go
 go: 1.1
 
-before_install:
- - sudo echo deb http://archive.ubuntu.com/ubuntu precise universe > /etc/apt/sources.list.d/universe.list
- - sudo apt-get update
-install:
- - sudo apt-get install -y iptables ca-certificates lxc
- - sudo wget -O /usr/local/bin/docker https://get.docker.io/builds/Linux/x86_64/docker-latest 
- 
 script:
  - ./travis_test.sh
