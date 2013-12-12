@@ -9,4 +9,4 @@ install:
  - docker -d &
 
 script:
- - ./test_unit.sh
+ - ./test_integration.sh
