@@ -1,2 +1,4 @@
 go-dockerclient
 build
+docker-testing-container/wc
+docker-testing-container/docker-latest

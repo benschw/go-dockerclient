@@ -8,7 +8,7 @@ RUN apt-get update -qq
 RUN apt-get install -qqy iptables ca-certificates lxc
 RUN apt-get install -qqy golang git
 
-#ADD ./ /opt/
+ADD ./wc /opt/
 
 
 #ADD https://get.docker.io/builds/Linux/x86_64/docker-latest /usr/local/bin/docker
