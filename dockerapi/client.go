@@ -17,6 +17,7 @@ const (
 	RESOURCE_PATH_INSPECT          = "/containers/%s/json"
 	RESOURCE_PATH_CREATE_CONTAINER = "/containers/create"
 	RESOURCE_PATH_START_CONTAINER  = "/containers/%s/start"
+	RESOURCE_PATH_STOP_CONTAINER   = "/containers/%s/stop?t=%s"
 )
 
 func NewClient(socketPath string) *Client {
