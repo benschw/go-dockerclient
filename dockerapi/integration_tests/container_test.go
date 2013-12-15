@@ -81,6 +81,28 @@ func Test_StopContainer(t *testing.T) {
 	}
 }
 
+func Test_RemoveContainer(t *testing.T) {
+	// given
+	id, err := createContainer("benschw/etcd")
+	if err != nil {
+		t.Error(err)
+	}
+
+	c := dockerapi.NewClient(socketPath)
+
+	// when
+	err = c.RemoveContainer(id)
+
+	// then
+	if err != nil {
+		t.Error(err)
+	}
+
+	if err := startEtcdContainer(id); err == nil {
+		t.Error("container should be removed and not possible to start")
+	}
+}
+
 func Test_InspectContainer(t *testing.T) {
 	// given
 	id, err := createContainer("benschw/etcd")
@@ -96,7 +118,7 @@ func Test_InspectContainer(t *testing.T) {
 	c := dockerapi.NewClient(socketPath)
 
 	// when
-	container, err := c.Inspect(id)
+	container, err := c.InspectContainer(id)
 
 	// then
 	if err != nil {

@@ -42,7 +42,7 @@ func main() {
 	}
 
 	// inspect container
-	container, err := c.Inspect(resp.Id)
+	container, err := c.InspectContainer(resp.Id)
 	if err != nil {
 		log.Fatal(err)
 		return

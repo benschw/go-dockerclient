@@ -18,6 +18,7 @@ const (
 	RESOURCE_PATH_CREATE_CONTAINER = "/containers/create"
 	RESOURCE_PATH_START_CONTAINER  = "/containers/%s/start"
 	RESOURCE_PATH_STOP_CONTAINER   = "/containers/%s/stop?t=%s"
+	RESOURCE_PATH_REMOVE_CONTAINER = "/containers/%s?v=1"
 )
 
 func NewClient(socketPath string) *Client {
@@ -33,6 +34,10 @@ type Client struct {
 
 func (c *Client) get(path string) ([]byte, int, error) {
 	return c.apiCall("GET", path, nil)
+}
+
+func (c *Client) delete(path string) ([]byte, int, error) {
+	return c.apiCall("DELETE", path, nil)
 }
 
 func (c *Client) post(path string, data interface{}) ([]byte, int, error) {
